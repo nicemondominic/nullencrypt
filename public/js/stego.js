@@ -130,26 +130,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-const darkToggle = document.getElementById("darkToggle");
+const toggle = document.getElementById("themeToggle");
 
-if (darkToggle) {
-
-  // Load saved theme
-  if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark");
-    darkToggle.textContent = "☀ Light";
-  }
-
-  darkToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-
-    if (document.body.classList.contains("dark")) {
-      localStorage.setItem("theme", "dark");
-      darkToggle.textContent = "☀ Light";
-    } else {
-      localStorage.setItem("theme", "light");
-      darkToggle.textContent = "🌙 Dark";
-    }
-  });
+/* Load saved theme */
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
+  toggle.textContent = "☀ Light";
 }
 
+toggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+
+  const isDark = document.body.classList.contains("dark");
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+
+  toggle.textContent = isDark ? "☀ Light" : "🌙 Dark";
+});
