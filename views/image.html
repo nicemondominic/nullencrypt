@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Encryption | nullEncrypt</title>
+
+
+  <link rel="stylesheet" href="/css/image.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">nullEncrypt</div>
+  <nav>
+    <a href="/dashboard" class="dash">Dashboard</a>
+    <button id="darkToggle" class="dark-toggle" type="button">🌙 Dark</button>
+  </nav>
+</header>
+
+<main class="page-wrapper">
+
+  <!-- INPUT CARD -->
+  <section class="crypto-card">
+
+    <h2>Image Encryption & Decryption</h2>
+    <p class="subtitle">Secure images using AES encryption</p>
+
+    <!-- MODE TOGGLE -->
+    <div class="toggle">
+      <button id="encryptBtn" class="active">Encrypt</button>
+      <button id="decryptBtn">Decrypt</button>
+    </div>
+
+    <form id="imageForm" class="crypto-form">
+
+      <div class="form-group">
+        <label>Select Image File</label>
+        <input type="file" id="imageFile" accept="image/*" required>
+      </div>
+
+      <!-- AES OPTIONS -->
+      <div class="form-group">
+        <label>AES Key Size</label>
+        <select id="aesKeySize">
+          <option value="128">128-bit</option>
+          <option value="192">192-bit</option>
+          <option value="256" selected>256-bit</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>AES Mode</label>
+        <select id="aesMode">
+          <option value="cbc">CBC (Recommended)</option>
+          <option value="ecb">ECB (Not Secure)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Secret Key</label>
+        <input type="text" id="secretKey" placeholder="Enter secret key" required>
+        <small class="key-hint">
+          AES-128: 16 chars • AES-192: 24 chars • AES-256: 32 chars
+        </small>
+      </div>
+
+      <button type="submit" class="btn-primary full-width">
+        Process Image
+      </button>
+
+    </form>
+  </section>
+
+  <!-- OUTPUT -->
+  <section class="output-card">
+    <h3>Output</h3>
+
+    <pre id="output" class="output-box show">
+Encrypted / decrypted file will be downloaded automatically.
+    </pre>
+
+  </section>
+
+</main>
+
+<script src="/js/image.js"></script>
+</body>
+</html>

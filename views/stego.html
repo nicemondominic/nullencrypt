@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Steganography | nullEncrypt</title>
+  <link rel="stylesheet" href="/css/stego.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">nullEncrypt</div>
+  <nav>
+     <a href="/dashboard" class="dash">Dashboard</a>
+    <button id="darkToggle" class="dark-toggle">🌙 Dark</button>
+  </nav>
+</header>
+
+<main class="page-wrapper">
+
+  <!-- INPUT -->
+  <section class="crypto-card">
+    <h2>Text in Image (Steganography)</h2>
+    <p class="subtitle">
+      Hide encrypted text inside an image using AES + LSB
+    </p>
+
+    <div class="toggle">
+      <button id="embedBtn" class="active">Embed</button>
+      <button id="extractBtn">Extract</button>
+    </div>
+
+    <form id="stegoForm" class="crypto-form">
+
+      <div class="form-group">
+        <label>Upload PNG Image</label>
+        <input type="file" id="imageFile" accept="image/png" required>
+      </div>
+
+      <div class="form-group">
+        <label>Text Message</label>
+        <textarea id="secretText" rows="4"
+          placeholder="Enter secret message (for embed)"></textarea>
+      </div>
+
+      <!-- AES OPTIONS -->
+      <div class="form-group">
+        <label>AES Key Size</label>
+        <select id="aesKeySize">
+          <option value="128">128-bit</option>
+          <option value="192">192-bit</option>
+          <option value="256" selected>256-bit</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>AES Mode</label>
+        <select id="aesMode">
+          <option value="cbc">CBC</option>
+          <option value="ecb">ECB (Not Secure)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Secret Key</label>
+        <input type="text" id="secretKey" required>
+        <small class="key-hint">
+          128 → 16 chars | 192 → 24 chars | 256 → 32 chars
+        </small>
+      </div>
+
+      <button type="submit" class="btn-primary">
+        Process
+      </button>
+    </form>
+  </section>
+
+  <!-- OUTPUT -->
+  <section class="output-card">
+    <h3>Output</h3>
+    <pre id="output" class="output-box">
+Result will appear here or image will download automatically.
+    </pre>
+  </section>
+
+</main>
+
+<script src="/js/stego.js"></script>
+</body>
+</html>

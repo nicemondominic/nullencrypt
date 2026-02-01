@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | nullEncrypt</title>
+
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">nullEncrypt</div>
+  <nav>
+    <a href="/" class="home-btn">Home</a>
+    <button id="darkToggle" class="dark-toggle" type="button">🌙 Dark</button>
+  </nav>
+</header>
+
+<main class="auth-wrapper">
+
+  <section class="auth-card">
+
+    <h2 id="formTitle">Login</h2>
+    <p class="subtitle" id="formSubtitle">
+      Access your secure encryption workspace
+    </p>
+
+    <!-- TOGGLE -->
+    <div class="toggle">
+      <button id="loginTab" class="active">Login</button>
+      <button id="registerTab">Register</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <form id="loginForm" class="auth-form">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="you@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" placeholder="••••••••" required>
+      </div>
+
+      <button type="submit" class="primary-btn">Login</button>
+    </form>
+
+    <!-- REGISTER FORM -->
+    <form id="registerForm" class="auth-form hidden">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" placeholder="Your name" required>
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="you@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" placeholder="Create a strong password" required>
+      </div>
+
+      <button type="submit" class="primary-btn">Create Account</button>
+    </form>
+
+  </section>
+
+</main>
+
+<script>
+/* ===============================
+   LOGIN / REGISTER TOGGLE
+=============================== */
+const loginTab = document.getElementById("loginTab");
+const registerTab = document.getElementById("registerTab");
+const loginForm = document.getElementById("loginForm");
+const registerForm = document.getElementById("registerForm");
+const formTitle = document.getElementById("formTitle");
+const formSubtitle = document.getElementById("formSubtitle");
+
+loginTab.onclick = () => {
+  loginTab.classList.add("active");
+  registerTab.classList.remove("active");
+  loginForm.classList.remove("hidden");
+  registerForm.classList.add("hidden");
+  formTitle.textContent = "Login";
+  formSubtitle.textContent = "Access your secure encryption workspace";
+};
+
+registerTab.onclick = () => {
+  registerTab.classList.add("active");
+  loginTab.classList.remove("active");
+  registerForm.classList.remove("hidden");
+  loginForm.classList.add("hidden");
+  formTitle.textContent = "Register";
+  formSubtitle.textContent = "Create a new secure account";
+};
+
+/* ===============================
+   DARK MODE TOGGLE
+=============================== */
+const darkToggle = document.getElementById("darkToggle");
+
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
+  darkToggle.textContent = "☀ Light";
+}
+
+darkToggle.onclick = () => {
+  document.body.classList.toggle("dark");
+  const isDark = document.body.classList.contains("dark");
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+  darkToggle.textContent = isDark ? "☀ Light" : "🌙 Dark";
+};
+</script>
+
+</body>
+</html>

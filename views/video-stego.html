@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Steganography | nullEncrypt</title>
+  <link rel="stylesheet" href="/css/video-stego.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">nullEncrypt</div>
+  <nav>
+    <a href="/dashboard" class="dash">Dashboard</a>
+    <button id="darkToggle" class="dark-toggle">🌙 Dark</button>
+  </nav>
+</header>
+
+<main class="page-wrapper">
+
+  <section class="crypto-card">
+    <h2>File in Video (Steganography)</h2>
+    <p class="subtitle">
+      Hide any encrypted file inside a video using AES + LSB
+    </p>
+
+    <div class="toggle">
+      <button id="embedBtn" class="active">Embed</button>
+      <button id="extractBtn">Extract</button>
+    </div>
+
+    <form id="videoStegoForm" class="crypto-form">
+
+      <div class="form-group">
+        <label>Upload Video (MP4)</label>
+        <input type="file" id="videoFile" accept="video/mp4" required>
+      </div>
+
+      <div class="form-group" id="fileGroup">
+        <label>File to Hide</label>
+        <input type="file" id="hiddenFile">
+      </div>
+
+      <!-- AES OPTIONS -->
+      <div class="form-group">
+        <label>AES Key Size</label>
+        <select id="aesKeySize">
+          <option value="128">128-bit</option>
+          <option value="192">192-bit</option>
+          <option value="256" selected>256-bit</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>AES Mode</label>
+        <select id="aesMode">
+          <option value="cbc">CBC</option>
+          <option value="ecb">ECB</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Secret Key</label>
+        <input type="text" id="secretKey" required>
+        <small class="key-hint">
+          AES-128: 16 chars • AES-192: 24 chars • AES-256: 32 chars
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label>Capacity Status</label>
+        <div id="capacityBox" class="capacity-box">
+          Upload video & file to calculate capacity
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary">Process</button>
+    </form>
+  </section>
+
+  <section class="output-card">
+    <h3>Output</h3>
+    <pre id="output" class="output-box">
+Video or extracted file will be downloaded automatically.
+    </pre>
+  </section>
+
+</main>
+
+<script src="/js/video-stego.js"></script>
+</body>
+</html>

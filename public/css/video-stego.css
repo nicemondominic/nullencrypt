@@ -1,0 +1,213 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Light */
+:root {
+  --bg: #ffffff;
+  --card: #ffffff;
+  --text: #000000;
+  --border: #e5e7eb;
+  --muted: #6b7280;
+}
+
+/* Dark */
+body.dark {
+  --bg: #000000;
+  --card: #000000;
+  --text: #ffffff;
+  --border: #1f2937;
+  --muted: #9ca3af;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px 40px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.navbar nav {
+  display: flex;
+  gap: 16px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: var(--text);
+}
+
+/* Toggle */
+.dark-toggle {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+
+body.dark .dark-toggle {
+  background: #fff;
+  color: #000;
+}
+
+/* Layout */
+.page-wrapper {
+  max-width: 1200px;
+  margin: 60px auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+/* Cards */
+.crypto-card,
+.output-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  background: var(--card);
+}
+
+/* Toggle buttons */
+.toggle {
+  display: flex;
+  margin: 20px 0;
+}
+
+.toggle button {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.toggle .active {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* Form */
+.form-group {
+  margin-bottom: 16px;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+}
+
+select, option {
+  background: #ffffff;
+  color: #000000;
+}
+
+.key-hint {
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Capacity */
+.capacity-box {
+  padding: 12px;
+  border: 1px dashed var(--border);
+  font-size: 0.9rem;
+}
+
+/* Button */
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--text);
+  background: var(--text);
+  color: var(--bg);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Output */
+.output-box {
+  min-height: 200px;
+  border: 1px solid var(--border);
+  padding: 16px;
+  border-radius: 10px;
+  white-space: pre-wrap;
+}
+.dash{
+    padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--text);
+  text-decoration: none;
+
+  background-color: var(--bg);
+  color: var(--text);
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.dash:hover {
+  background-color: var(--text);
+  color: var(--bg);
+}
+
+/* Dark mode behavior */
+body.dark .dash {
+  border-color: #ffffff;
+}
+
+body.dark .dash:hover {
+  background-color: #ffffff;
+  color: #000000;
+}
+.dark-toggle {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+body.dark .dark-toggle {
+  background-color: #ffffff;
+  color: #000000;
+}
+/* Responsive */
+@media (max-width: 900px) {
+  .page-wrapper {
+    grid-template-columns: 1fr;
+  }
+}

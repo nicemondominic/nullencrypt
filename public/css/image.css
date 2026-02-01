@@ -1,0 +1,282 @@
+/* =====================================================
+   RESET & VARIABLES
+===================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* LIGHT MODE (DEFAULT) */
+:root {
+  --bg: #ffffff;
+  --card: #ffffff;
+  --text: #000000;
+  --border: #e5e7eb;
+  --muted: #6b7280;
+}
+
+/* DARK MODE */
+body.dark {
+  --bg: #000000;
+  --card: #000000;
+  --text: #ffffff;
+  --border: #1f2937;
+  --muted: #9ca3af;
+}
+
+/* =====================================================
+   BODY
+===================================================== */
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.navbar nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* =====================================================
+   DARK MODE TOGGLE
+===================================================== */
+.dark-toggle {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+body.dark .dark-toggle {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* =====================================================
+   PAGE LAYOUT
+===================================================== */
+.page-wrapper {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+/* =====================================================
+   CARDS
+===================================================== */
+.crypto-card,
+.output-card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* =====================================================
+   HEADINGS
+===================================================== */
+.crypto-card h2,
+.output-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+/* =====================================================
+   ENCRYPT / DECRYPT TOGGLE
+===================================================== */
+.toggle {
+  display: flex;
+  margin-bottom: 22px;
+}
+
+.toggle button {
+  padding: 10px 26px;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.toggle button:first-child {
+  border-radius: 20px 0 0 20px;
+}
+
+.toggle button:last-child {
+  border-radius: 0 20px 20px 0;
+}
+
+.toggle .active {
+  background-color: var(--text);
+  color: var(--bg);
+}
+
+/* =====================================================
+   FORM
+===================================================== */
+.crypto-form {
+  width: 100%;
+  max-width: 420px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* INPUTS */
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+/* SELECT FIX (DARK MODE) */
+select,
+select option {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* FILE INPUT */
+input[type="file"] {
+  padding: 8px;
+}
+
+/* KEY HINT */
+.key-hint {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 4px;
+  display: block;
+  text-align: center;
+}
+
+/* =====================================================
+   BUTTON
+===================================================== */
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--text);
+  background-color: var(--text);
+  color: var(--bg);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* =====================================================
+   OUTPUT BOX
+===================================================== */
+.output-box {
+  width: 100%;
+  max-width: 420px;
+  min-height: 220px;
+  padding: 18px;
+
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background-color: var(--bg);
+  color: var(--text);
+
+  font-family: "Courier New", monospace;
+  font-size: 0.9rem;
+  text-align: center;
+  line-height: 1.5;
+
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-y: auto;
+}
+.dash{
+    padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--text);
+  text-decoration: none;
+
+  background-color: var(--bg);
+  color: var(--text);
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.dash:hover {
+  background-color: var(--text);
+  color: var(--bg);
+}
+
+/* Dark mode behavior */
+body.dark .dash {
+  border-color: #ffffff;
+}
+
+body.dark .dash:hover {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+@media (max-width: 900px) {
+  .page-wrapper {
+    grid-template-columns: 1fr;
+  }
+}

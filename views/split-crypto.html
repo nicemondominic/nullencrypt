@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Distributed Encryption</title>
+  <link rel="stylesheet" href="/css/split-crypto.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">nullEncrypt</div>
+  <nav>
+    <a href="/dashboard" class="dash">Dashboard</a>
+    <button id="themeToggle" class="theme-toggle">
+  🌙 Dark
+</button>
+
+  </nav>
+</header>
+
+<main class="page-wrapper">
+
+<section class="crypto-card">
+
+  <h2>Encrypt & Split File</h2>
+  <p class="subtitle">
+    Encrypt a file and split it into multiple fragments.
+    All fragments are required to decrypt.
+  </p>
+
+  <form id="encryptForm">
+    <div class="form-group">
+      <label>Select File</label>
+      <input type="file" id="inputFile" required>
+    </div>
+
+    <div class="form-group">
+      <label>Number of Fragments</label>
+      <input type="number" id="numFragments" min="2" max="20" required>
+    </div>
+
+    <div class="form-group">
+      <label>Secret Key</label>
+      <input type="text" id="encKey" required>
+    </div>
+
+    <button class="btn-primary">Encrypt & Split</button>
+  </form>
+
+</section>
+
+<section class="crypto-card">
+
+  <h2>Reassemble & Decrypt</h2>
+  <p class="subtitle">
+    Upload all fragments to restore the original file.
+  </p>
+
+  <form id="decryptForm">
+    <div class="form-group">
+      <label>Upload Fragments</label>
+      <input type="file" id="fragmentFiles" multiple required>
+    </div>
+
+    <div class="form-group">
+      <label>Secret Key</label>
+      <input type="text" id="decKey" required>
+    </div>
+
+    <button class="btn-primary">Reassemble & Decrypt</button>
+  </form>
+
+</section>
+
+<section class="output-card">
+  <pre id="output" class="output-box">
+Status messages will appear here.
+  </pre>
+</section>
+
+</main>
+
+<script src="/js/split-crypto.js"></script>
+</body>
+</html>

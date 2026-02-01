@@ -1,0 +1,211 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* LIGHT */
+:root {
+  --bg: #ffffff;
+  --card: #ffffff;
+  --text: #000000;
+  --border: #e5e7eb;
+  --muted: #6b7280;
+}
+
+/* DARK */
+body.dark {
+  --bg: #000000;
+  --card: #000000;
+  --text: #ffffff;
+  --border: #1f2937;
+  --muted: #9ca3af;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px 40px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.navbar nav {
+  display: flex;
+  gap: 16px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: var(--text);
+}
+
+/* DARK TOGGLE */
+.dark-toggle {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+
+body.dark .dark-toggle {
+  background: #fff;
+  color: #000;
+}
+
+/* LAYOUT */
+.page-wrapper {
+  max-width: 1200px;
+  margin: 60px auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+/* CARDS */
+.crypto-card,
+.output-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  background: var(--card);
+}
+
+/* TOGGLE */
+.toggle {
+  display: flex;
+  margin: 20px 0;
+}
+
+.toggle button {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.toggle .active {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* FORM */
+.form-group {
+  margin-bottom: 16px;
+}
+
+label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+}
+
+select,
+select option {
+  background: #ffffff;
+  color: #000000;
+}
+
+.key-hint {
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: center;
+  display: block;
+}
+
+/* BUTTON */
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--text);
+  background: var(--text);
+  color: var(--bg);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* OUTPUT */
+.output-box {
+  min-height: 200px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  white-space: pre-wrap;
+}
+.dash{
+    padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--text);
+  text-decoration: none;
+
+  background-color: var(--bg);
+  color: var(--text);
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.dash:hover {
+  background-color: var(--text);
+  color: var(--bg);
+}
+
+/* Dark mode behavior */
+body.dark .dash {
+  border-color: #ffffff;
+}
+
+body.dark .dash:hover {
+  background-color: #ffffff;
+  color: #000000;
+}
+.dark-toggle {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+body.dark .dark-toggle {
+  background-color: #ffffff;
+  color: #000000;
+}
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .page-wrapper {
+    grid-template-columns: 1fr;
+  }
+}

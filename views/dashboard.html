@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | nullEncrypt</title>
+
+  
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">nullEncrypt</div>
+  <nav>
+     <a href="/" class="home-btn">Home</a>
+    <button id="darkToggle" class="dark-toggle" type="button">🌙 Dark</button>
+  </nav>
+</header>
+
+<main class="dashboard">
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Encryption Dashboard</h1>
+    <p>
+      Secure your data using modern cryptographic algorithms for
+      text and images
+    </p>
+  </section>
+
+  <!-- CARDS -->
+  <section class="card-grid">
+
+    <a href="/text" class="crypto-card">
+      <div class="card-icon text-icon">TXT</div>
+      <h3>Text Encryption</h3>
+      <p>
+        Encrypt and decrypt text using AES, RSA, SHA, bcrypt,
+        and Argon2 with advanced options.
+      </p>
+      <span class="card-action">Open →</span>
+    </a>
+
+    <a href="/image" class="crypto-card">
+      <div class="card-icon image-icon">IMG</div>
+      <h3>Image Encryption</h3>
+      <p>
+        Secure images using AES encryption with selectable key
+        sizes and modes.
+      </p>
+      <span class="card-action">Open →</span>
+    </a>
+
+    <a href="/stego" class="crypto-card">
+  <div class="card-icon">STEGO</div>
+  <h3>Text in Image</h3>
+  <p>
+    Hide encrypted text inside an image using
+    steganography techniques.
+  </p>
+  <span class="card-action">Open →</span>
+</a>
+
+    <a href="/video-stego" class="crypto-card">
+  <div class="card-icon">VID</div>
+  <h3>File in Video</h3>
+  <p>
+    Hide any encrypted file inside a video
+    using steganography techniques.
+  </p>
+  <span class="card-action">Open →</span>
+</a>
+
+<a href="/split-crypto" class="crypto-card">
+  <div class="card-icon">SPLIT</div>
+  <h3>Distributed Encryption</h3>
+  <p>
+    Encrypt a file and split it into multiple fragments.
+    All fragments are required to decrypt.
+  </p>
+  <span class="card-action">Open →</span>
+</a>
+
+
+
+
+  </section>
+
+</main>
+
+<script src="/js/main.js"></script>
+</body>
+</html>

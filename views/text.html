@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Text Cryptography | nullEncrypt</title>
+
+
+  <link rel="stylesheet" href="/css/text.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">nullEncrypt</div>
+  <nav>
+    <a href="/dashboard" class="dash">Dashboard</a>
+    <button id="darkToggle" class="dark-toggle" type="button">
+  🌙 Dark
+</button>
+  </nav>
+</header>
+
+<main class="page-wrapper">
+
+  <!-- INPUT CARD -->
+  <section class="crypto-card">
+
+    <h2>Text Encryption & Decryption</h2>
+    <p class="subtitle">Secure text using modern cryptographic algorithms</p>
+
+    <!-- MODE TOGGLE -->
+    <div class="toggle">
+      <button id="encryptBtn" class="active">Encrypt</button>
+      <button id="decryptBtn">Decrypt</button>
+    </div>
+
+    <form id="cryptoForm" class="crypto-form">
+
+  <div class="form-group">
+    <label>Algorithm</label>
+    <select id="algorithm">
+      <option value="aes">AES</option>
+      <option value="rsa">RSA</option>
+      <option value="chacha20">ChaCha20</option>
+      <option value="base64">Base64</option>
+      <option value="sha256">SHA-256 (Hash)</option>
+      <option value="bcrypt">bcrypt (Hash)</option>
+      <option value="argon2">Argon2 (Hash)</option>
+    </select>
+  </div>
+
+  <!-- AES OPTIONS -->
+  <div id="aesOptions" class="aes-options">
+
+    <div class="form-group">
+      <label>AES Key Size</label>
+      <select id="aesKeySize">
+        <option value="128">128-bit</option>
+        <option value="192">192-bit</option>
+        <option value="256" selected>256-bit</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>AES Mode</label>
+      <select id="aesMode">
+        <option value="cbc">CBC (Recommended)</option>
+        <option value="ecb">ECB (Not Secure)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Output Format</label>
+      <select id="aesFormat">
+        <option value="hex">Hex</option>
+        <option value="base64">Base64</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Secret Key</label>
+      <input type="text" id="secretKey" placeholder="Enter secret key">
+      <small class="key-hint">
+  AES-128: 16 chars • AES-192: 24 chars • AES-256: 32 chars
+</small>
+
+    </div>
+
+  </div>
+
+  <div class="form-group">
+    <label>Input Text</label>
+    <textarea id="inputText" rows="6" required></textarea>
+  </div>
+
+  <button type="submit" class="btn-primary">Process</button>
+</form>
+
+  </section>
+
+  <!-- OUTPUT -->
+  <section class="output-card">
+    <h3>Output</h3>
+
+    <pre id="output" class="output-box"></pre>
+
+    <button id="copyBtn" class="copy-btn">Copy Output</button>
+  </section>
+
+</main>
+
+<script src="/js/main.js"></script>
+</body>
+</html>

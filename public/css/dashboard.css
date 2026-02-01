@@ -1,0 +1,226 @@
+/* =====================================================
+   GLOBAL RESET & VARIABLES
+===================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Light Theme (Default) */
+:root {
+  --bg: #ffffff;
+  --card: #ffffff;
+  --text: #000000;
+  --border: #e5e7eb;
+  --muted: #6b7280;
+}
+
+/* Dark Theme */
+body.dark {
+  --bg: #000000;
+  --card: #000000;
+  --text: #ffffff;
+  --border: #1f2937;
+  --muted: #9ca3af;
+}
+
+/* =====================================================
+   BODY
+===================================================== */
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.navbar nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* =====================================================
+   DARK MODE TOGGLE BUTTON
+===================================================== */
+.dark-toggle {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+body.dark .dark-toggle {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* =====================================================
+   DASHBOARD LAYOUT
+===================================================== */
+.dashboard {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 20px;
+}
+
+/* =====================================================
+   HERO SECTION
+===================================================== */
+.hero {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.hero h1 {
+  font-size: 2.4rem;
+  margin-bottom: 12px;
+}
+
+.hero p {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* =====================================================
+   CARD GRID
+===================================================== */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+/* =====================================================
+   CARDS
+===================================================== */
+.crypto-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  text-decoration: none;
+  color: var(--text);
+  background-color: var(--card);
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  transition: transform 0.3s ease, border 0.3s ease;
+}
+
+.crypto-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--text);
+}
+
+/* =====================================================
+   CARD ICONS (PURE TEXT STYLE)
+===================================================== */
+.card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.9rem;
+  border: 1px solid var(--text);
+}
+
+/* =====================================================
+   CARD TEXT
+===================================================== */
+.crypto-card h3 {
+  font-size: 1.3rem;
+}
+
+.crypto-card p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* =====================================================
+   CARD ACTION
+===================================================== */
+.card-action {
+  margin-top: auto;
+  font-weight: 600;
+  text-decoration: underline;
+}
+/* ===============================
+   HOME BUTTON (DASHBOARD)
+=============================== */
+.home-btn {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--text);
+  text-decoration: none;
+
+  background-color: var(--bg);
+  color: var(--text);
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* Hover effect */
+.home-btn:hover {
+  background-color: var(--text);
+  color: var(--bg);
+}
+
+/* Dark mode behavior */
+body.dark .home-btn {
+  border-color: #ffffff;
+}
+
+body.dark .home-btn:hover {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

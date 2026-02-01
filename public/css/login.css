@@ -1,0 +1,238 @@
+/* =====================================================
+   RESET & VARIABLES
+===================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* LIGHT MODE */
+:root {
+  --bg: #ffffff;
+  --card: #ffffff;
+  --text: #000000;
+  --border: #e5e7eb;
+  --muted: #6b7280;
+}
+
+/* DARK MODE */
+body.dark {
+  --bg: #000000;
+  --card: #000000;
+  --text: #ffffff;
+  --border: #1f2937;
+  --muted: #9ca3af;
+}
+
+/* =====================================================
+   BODY
+===================================================== */
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.navbar nav {
+  display: flex;
+  gap: 16px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* =====================================================
+   DARK TOGGLE
+===================================================== */
+.dark-toggle {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+body.dark .dark-toggle {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* =====================================================
+   AUTH LAYOUT
+===================================================== */
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 36px;
+  background-color: var(--card);
+  text-align: center;
+}
+
+/* =====================================================
+   HEADINGS
+===================================================== */
+.auth-card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+/* =====================================================
+   TOGGLE
+===================================================== */
+.toggle {
+  display: flex;
+  margin-bottom: 28px;
+}
+
+.toggle button {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.toggle button:first-child {
+  border-radius: 20px 0 0 20px;
+}
+
+.toggle button:last-child {
+  border-radius: 0 20px 20px 0;
+}
+
+.toggle .active {
+  background-color: var(--text);
+  color: var(--bg);
+}
+
+/* =====================================================
+   FORMS
+===================================================== */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  text-align: left;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+input::placeholder {
+  color: var(--muted);
+}
+
+/* =====================================================
+   BUTTON
+===================================================== */
+.primary-btn {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--text);
+  background-color: var(--text);
+  color: var(--bg);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* =====================================================
+   UTIL
+===================================================== */
+.hidden {
+  display: none;
+}
+.home-btn {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--text);
+  text-decoration: none;
+
+  background-color: var(--bg);
+  color: var(--text);
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* Hover effect */
+.home-btn:hover {
+  background-color: var(--text);
+  color: var(--bg);
+}
+
+/* Dark mode behavior */
+body.dark .home-btn {
+  border-color: #ffffff;
+}
+
+body.dark .home-btn:hover {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 28px;
+  }
+}

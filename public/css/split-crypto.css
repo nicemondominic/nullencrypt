@@ -1,0 +1,230 @@
+/* =====================================================
+   RESET
+===================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+/* =====================================================
+   LIGHT MODE (DEFAULT)
+===================================================== */
+:root {
+  --bg: #ffffff;
+  --card: #ffffff;
+
+  --text: #000000;
+  --muted: #555555;
+  --border: #d1d5db;
+}
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+body.dark {
+  --bg: #000000;
+  --card: #000000;
+
+  --text: #ffffff;
+  --muted: #a1a1aa;
+  --border: #27272a;
+}
+
+/* =====================================================
+   BODY
+===================================================== */
+body {
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px;
+
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+/* Links */
+.navbar a {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* =====================================================
+   THEME TOGGLE BUTTON
+===================================================== */
+.theme-toggle {
+  padding: 8px 14px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+
+  background: transparent;
+  color: var(--text);
+
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* =====================================================
+   PAGE LAYOUT
+===================================================== */
+.page-wrapper {
+  max-width: 1200px;
+  margin: 64px auto;
+  padding: 0 20px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+}
+
+/* =====================================================
+   CARDS
+===================================================== */
+.crypto-card,
+.output-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+}
+
+/* =====================================================
+   HEADINGS & TEXT
+===================================================== */
+.crypto-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  margin: 10px 0 24px;
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* =====================================================
+   FORM
+===================================================== */
+.form-group {
+  margin-bottom: 18px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Inputs */
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+
+  background: var(--bg);
+  color: var(--text);
+
+  border: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+
+/* =====================================================
+   BUTTON
+===================================================== */
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+
+  border-radius: 10px;
+  border: 1px solid var(--text);
+
+  background: var(--text);
+  color: var(--bg);
+
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* =====================================================
+   OUTPUT BOX
+===================================================== */
+.output-box {
+  min-height: 140px;
+  padding: 16px;
+
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+
+  background: var(--bg);
+  color: var(--text);
+
+  font-family: "Courier New", monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+
+  white-space: pre-wrap;
+}
+.dash{
+    padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--text);
+  text-decoration: none;
+
+  background-color: var(--bg);
+  color: var(--text);
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.dash:hover {
+  background-color: var(--text);
+  color: var(--bg);
+}
+
+/* Dark mode behavior */
+body.dark .dash {
+  border-color: #ffffff;
+}
+
+body.dark .dash:hover {
+  background-color: #ffffff;
+  color: #000000;
+}
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+@media (max-width: 900px) {
+  .page-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .navbar {
+    padding: 16px 24px;
+  }
+}
