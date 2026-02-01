@@ -32,39 +32,27 @@ body {
 .navbar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 18px 40px;
+
+  background: var(--card);
   border-bottom: 1px solid var(--border);
 }
 
 .logo {
   font-size: 1.4rem;
   font-weight: 700;
+  letter-spacing: 0.4px;
 }
 
-.navbar nav {
-  display: flex;
-  gap: 16px;
-}
-
+/* Links */
 .navbar a {
   text-decoration: none;
   color: var(--text);
+  font-weight: 500;
 }
 
 /* Toggle */
-.dark-toggle {
-  padding: 8px 16px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text);
-  cursor: pointer;
-}
-
-body.dark .dark-toggle {
-  background: #fff;
-  color: #000;
-}
 
 /* Layout */
 .page-wrapper {
