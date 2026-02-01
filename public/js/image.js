@@ -10,16 +10,16 @@ document.addEventListener("DOMContentLoaded", () => {
   let mode = "encrypt";
 
   /* ===============================
-     MODE SWITCH (IMPORTANT)
+     MODE SWITCH (MOBILE SAFE)
   =============================== */
   encryptBtn.onclick = () => {
     mode = "encrypt";
     encryptBtn.classList.add("active");
     decryptBtn.classList.remove("active");
 
-    // 🔥 MOBILE FIX: allow only images
+    // ✅ Allow ALL image formats (PNG, JPG, JPEG, HEIC)
     imageInput.accept = "image/*";
-    imageInput.value = ""; // reset file picker
+    imageInput.value = "";
   };
 
   decryptBtn.onclick = () => {
@@ -27,9 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
     decryptBtn.classList.add("active");
     encryptBtn.classList.remove("active");
 
-    // 🔥 MOBILE FIX: allow encrypted .bin files
+    // ✅ Allow encrypted binary files on mobile
     imageInput.accept = ".bin,application/octet-stream,*/*";
-    imageInput.value = ""; // reset file picker
+    imageInput.value = "";
   };
 
   /* ===============================
@@ -78,16 +78,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const a = document.createElement("a");
       a.href = url;
 
-      // Filename logic
-      a.download =
-        mode === "encrypt"
-          ? "encrypted-image.bin"
-          : "decrypted-image.png";
+      if (mode === "encrypt") {
+        // 🔐 Encrypted file always binary
+        a.download = "encrypted-image.bin";
+      }
+      // 🔓 DECRYPT: DO NOT SET a.download
+      // Let browser use server-provided filename (CRITICAL FOR HEIC)
 
       document.body.appendChild(a);
       a.click();
       a.remove();
-
       window.URL.revokeObjectURL(url);
 
     } catch (err) {
@@ -104,7 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
 const toggle = document.getElementById("themeToggle");
 
 if (toggle) {
-
   if (localStorage.getItem("theme") === "dark") {
     document.body.classList.add("dark");
     toggle.textContent = "☀ Light";
