@@ -3,6 +3,12 @@ const path = require('path');
 
 const app = express();
 
+const PORT = 3000;
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log("🚀 Server running on port 3000");
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -55,7 +61,3 @@ app.get("/split-crypto", (req, res) =>
 app.use("/api/split-crypto", require("./routes/split-crypto.routes"));
 
 
-
-app.listen(3000, () => {
-  console.log('✅ Server running on http://localhost:3000');
-});
