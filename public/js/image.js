@@ -13,24 +13,31 @@ document.addEventListener("DOMContentLoaded", () => {
      MODE SWITCH (MOBILE SAFE)
   =============================== */
   encryptBtn.onclick = () => {
-    mode = "encrypt";
-    encryptBtn.classList.add("active");
-    decryptBtn.classList.remove("active");
+  mode = "encrypt";
+  encryptBtn.classList.add("active");
+  decryptBtn.classList.remove("active");
 
-    // ✅ Allow ALL image formats (PNG, JPG, JPEG, HEIC)
-    imageInput.accept = "image/*";
-    imageInput.value = "";
-  };
+  // ✅ iOS-safe reset
+  imageInput.value = "";
+  imageInput.accept = "image/*";
 
-  decryptBtn.onclick = () => {
-    mode = "decrypt";
-    decryptBtn.classList.add("active");
-    encryptBtn.classList.remove("active");
+  // 🔧 Force reflow (fixes iOS picker bug)
+  imageInput.type = "text";
+  imageInput.type = "file";
+};
 
-    // ✅ Allow encrypted binary files on mobile
-    imageInput.accept = ".bin,application/octet-stream,*/*";
-    imageInput.value = "";
-  };
+decryptBtn.onclick = () => {
+  mode = "decrypt";
+  decryptBtn.classList.add("active");
+  encryptBtn.classList.remove("active");
+
+  imageInput.value = "";
+  imageInput.accept = ".bin,application/octet-stream,*/*";
+
+  imageInput.type = "text";
+  imageInput.type = "file";
+};
+
 
   /* ===============================
      FORM SUBMIT
