@@ -10,44 +10,42 @@ document.addEventListener("DOMContentLoaded", () => {
   let mode = "encrypt";
 
   /* ===============================
-     MODE SWITCH (MOBILE SAFE)
+     MODE SWITCH (iOS SAFE)
   =============================== */
   encryptBtn.onclick = () => {
-  mode = "encrypt";
-  encryptBtn.classList.add("active");
-  decryptBtn.classList.remove("active");
+    mode = "encrypt";
+    encryptBtn.classList.add("active");
+    decryptBtn.classList.remove("active");
 
-  // ✅ iOS-safe reset
-  imageInput.value = "";
-  imageInput.accept = "image/*";
+    imageInput.value = "";
+    imageInput.accept = "image/*";
 
-  // 🔧 Force reflow (fixes iOS picker bug)
-  imageInput.type = "text";
-  imageInput.type = "file";
-};
+    // iOS Safari picker reset
+    imageInput.type = "text";
+    imageInput.type = "file";
+  };
 
-decryptBtn.onclick = () => {
-  mode = "decrypt";
-  decryptBtn.classList.add("active");
-  encryptBtn.classList.remove("active");
+  decryptBtn.onclick = () => {
+    mode = "decrypt";
+    decryptBtn.classList.add("active");
+    encryptBtn.classList.remove("active");
 
-  imageInput.value = "";
-  imageInput.accept = ".bin,application/octet-stream,*/*";
+    imageInput.value = "";
+    imageInput.accept = ".bin,application/octet-stream,*/*";
 
-  imageInput.type = "text";
-  imageInput.type = "file";
-};
-
+    imageInput.type = "text";
+    imageInput.type = "file";
+  };
 
   /* ===============================
-     FORM SUBMIT
+     SUBMIT
   =============================== */
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const file = imageInput.files[0];
-    if (!file) {
-      alert("Please select a file");
+    if (!file || file.size === 0) {
+      alert("Please select a valid image");
       return;
     }
 
@@ -55,58 +53,59 @@ decryptBtn.onclick = () => {
     const keySize = document.getElementById("aesKeySize").value;
     const aesMode = document.getElementById("aesMode").value;
 
-    const minLength = keySize / 8;
-    if (key.length < minLength) {
-      alert(`AES-${keySize} requires at least ${minLength} characters key`);
+    const minLen = keySize / 8;
+    if (key.length < minLen) {
+      alert(`AES-${keySize} requires ${minLen} characters`);
       return;
     }
 
     const formData = new FormData();
-    formData.append("image", file);
+
+    // 🔥 CRITICAL iOS FIX (filename metadata)
+    formData.append("image", file, file.name || "image.heic");
     formData.append("mode", mode);
     formData.append("key", key);
     formData.append("keySize", keySize);
     formData.append("aesMode", aesMode);
 
     try {
-      const response = await fetch("/api/crypto-image", {
+      const res = await fetch("/api/crypto-image", {
         method: "POST",
         body: formData
       });
 
-      if (!response.ok) {
+      if (!res.ok) {
         alert("Image processing failed");
         return;
       }
 
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
 
       const a = document.createElement("a");
       a.href = url;
 
+      // Encrypt → binary
       if (mode === "encrypt") {
-        // 🔐 Encrypted file always binary
         a.download = "encrypted-image.bin";
       }
-      // 🔓 DECRYPT: DO NOT SET a.download
-      // Let browser use server-provided filename (CRITICAL FOR HEIC)
+      // Decrypt → DO NOT force extension (HEIC SAFE)
 
       document.body.appendChild(a);
       a.click();
       a.remove();
-      window.URL.revokeObjectURL(url);
+      URL.revokeObjectURL(url);
 
     } catch (err) {
       console.error(err);
-      alert("Unexpected error occurred");
+      alert("Unexpected error");
     }
   });
 
 });
 
 /* ===============================
-   THEME TOGGLE (UNCHANGED)
+   THEME TOGGLE
 =============================== */
 const toggle = document.getElementById("themeToggle");
 
@@ -118,10 +117,8 @@ if (toggle) {
 
   toggle.addEventListener("click", () => {
     document.body.classList.toggle("dark");
-
     const isDark = document.body.classList.contains("dark");
     localStorage.setItem("theme", isDark ? "dark" : "light");
-
     toggle.textContent = isDark ? "☀ Light" : "🌙 Dark";
   });
 }

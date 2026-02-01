@@ -60,4 +60,7 @@ app.get("/split-crypto", (req, res) =>
 
 app.use("/api/split-crypto", require("./routes/split-crypto.routes"));
 
+app.use("/api", require("./routes/crypto-image.routes"));
+
+
 
