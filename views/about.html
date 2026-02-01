@@ -1,21 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - nullEncrypt</title>
-    <link rel="stylesheet" href="/css/split-crypto.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | nullEncrypt</title>
+
+  <link rel="stylesheet" href="/css/about.css">
 </head>
 <body>
-    <header class="navbar">
+
+<header class="navbar">
   <div class="logo">nullEncrypt</div>
   <nav>
-    <a href="/dashboard" class="dash">Dashboard</a>
-    <button id="themeToggle" class="theme-toggle">
-  🌙 Dark
-</button>
-
+    <a href="/" class="nav-link">Home</a>
+    <a href="/dashboard" class="nav-link">Dashboard</a>
+    <button id="themeToggle" class="theme-toggle">🌙 Dark</button>
   </nav>
 </header>
+
+<main class="about">
+
+  <!-- INTRO -->
+  <section class="about-section">
+    <h1>About nullEncrypt</h1>
+    <p class="lead">
+      nullEncrypt is a security-focused encryption platform designed
+      to demonstrate real cryptographic principles through practical,
+      usable tools.
+    </p>
+  </section>
+
+  <!-- PLATFORM DETAILS -->
+  <section class="about-section">
+    <h2>What is nullEncrypt?</h2>
+    <p>
+      nullEncrypt is not a demo application. It is a research-oriented
+      encryption and security platform that implements real-world
+      cryptographic concepts including:
+    </p>
+
+    <ul>
+      <li>Text encryption using industry-standard algorithms</li>
+      <li>Image and video encryption workflows</li>
+      <li>Steganography for hiding encrypted data</li>
+      <li>Distributed file encryption using mandatory fragment reassembly</li>
+      <li>Dark-mode-first, security-oriented user interface</li>
+    </ul>
+
+    <p>
+      Every feature is built with correctness, reversibility,
+      and security principles in mind.
+    </p>
+  </section>
+
+  <!-- DESIGN PHILOSOPHY -->
+  <section class="about-section">
+    <h2>Design Philosophy</h2>
+    <p>
+      The platform follows a minimal black-and-white design to
+      reduce visual noise and focus attention on security operations.
+      This mirrors professional cryptographic tools and research
+      environments.
+    </p>
+
+    <p>
+      The system avoids unnecessary abstractions and prioritizes
+      transparency, correctness, and educational value.
+    </p>
+  </section>
+
+  <!-- CREATOR -->
+  <section class="about-section creator">
+    <h2>Creator</h2>
+    <p>
+      <strong>Nicemon Dominic</strong><br>
+      Developer & Security Enthusiast
+    </p>
+
+    <p>
+      nullEncrypt was created as an academic and practical exploration
+      of cryptography, steganography, and secure system design.
+      The project focuses on building tools that reflect how
+      real-world security systems behave.
+    </p>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+
+  <div class="social-links">
+    <!-- Instagram -->
+    <a href="https://instagram.com/nullencrypt" target="_blank" aria-label="Instagram">
+      <svg class="icon" viewBox="0 0 24 24">
+        <path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm5 5a5 5 0 100 10 5 5 0 000-10zm6.5-.9a1.1 1.1 0 11-2.2 0 1.1 1.1 0 012.2 0z"/>
+      </svg>
+    </a>
+
+    <!-- Email -->
+    <a href="mailto:nulllencrypt@gmail.com" aria-label="Email">
+      <svg class="icon" viewBox="0 0 24 24">
+        <path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zm8 7l8-5H4l8 5zm0 2L4 8v10h16V8l-8 5z"/>
+      </svg>
+    </a>
+  </div>
+
+  <p>
+    © 2026 nullEncrypt — Created by Nicemon Dominic
+  </p>
+
+</footer>
+
+<script>
+  const toggle = document.getElementById("themeToggle");
+
+/* Load saved theme */
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
+  toggle.textContent = "☀ Light";
+}
+
+toggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+
+  const isDark = document.body.classList.contains("dark");
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+
+  toggle.textContent = isDark ? "☀ Light" : "🌙 Dark";
+});
+</script>
 </body>
 </html>

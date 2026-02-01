@@ -1,0 +1,174 @@
+/* =====================================================
+   RESET
+===================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+/* =====================================================
+   THEME
+===================================================== */
+:root {
+  --bg: #ffffff;
+  --text: #000000;
+  --muted: #555555;
+  --border: #d1d5db;
+}
+
+body.dark {
+  --bg: #000000;
+  --text: #ffffff;
+  --muted: #a1a1aa;
+  --border: #27272a;
+}
+
+/* =====================================================
+   BODY
+===================================================== */
+body {
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+.navbar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.navbar nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 8px 16px;
+  border: 1px solid var(--text);
+  border-radius: 18px;
+}
+
+/* Toggle */
+.theme-toggle {
+  padding: 8px 14px;
+  border-radius: 18px;
+  border: 1px solid var(--text);
+  background: transparent;
+  color: var(--text);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+body.dark .theme-toggle {
+  background: #ffffff;
+  color: #000000;
+}
+
+/* =====================================================
+   ABOUT CONTENT
+===================================================== */
+.about {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+.about-section {
+  margin-bottom: 48px;
+}
+
+.about-section h1 {
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+}
+
+.about-section h2 {
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+}
+
+.lead {
+  font-size: 1.05rem;
+  color: var(--muted);
+}
+
+.about-section p {
+  margin-bottom: 12px;
+}
+
+.about-section ul {
+  padding-left: 20px;
+  margin: 12px 0;
+}
+
+.about-section li {
+  margin-bottom: 8px;
+}
+
+.creator p strong {
+  font-size: 1.1rem;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 16px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 12px;
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  fill: var(--text);
+  transition: opacity 0.2s ease;
+}
+
+.icon:hover {
+  opacity: 0.7;
+}
+
+/* =====================================================
+   DESKTOP
+===================================================== */
+@media (min-width: 900px) {
+  .navbar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 48px;
+  }
+
+  .about {
+    margin: 80px auto;
+  }
+}
