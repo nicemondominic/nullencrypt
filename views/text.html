@@ -77,13 +77,29 @@
     </div>
 
     <div class="form-group">
-      <label>Secret Key</label>
-      <input type="text" id="secretKey" placeholder="Enter secret key">
-      <small class="key-hint">
-  AES-128: 16 chars • AES-192: 24 chars • AES-256: 32 chars
-</small>
+  <label>Secret Key</label>
 
-    </div>
+  <div style="display:flex; gap:8px;">
+    <input
+      type="text"
+      id="secretKey"
+      placeholder="Enter or generate secret key"
+      style="flex:1"
+    />
+    <button
+      type="button"
+      id="generateKeyBtn"
+      class="btn-secondary"
+    >
+      Generate
+    </button>
+  </div>
+
+  <small class="key-hint">
+    AES-128: 16 chars • AES-192: 24 chars • AES-256: 32 chars
+  </small>
+</div>
+
 
   </div>
 

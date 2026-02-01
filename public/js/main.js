@@ -184,3 +184,36 @@ toggle.addEventListener("click", () => {
 
   toggle.textContent = isDark ? "☀ Light" : "🌙 Dark";
 });
+
+const generateKeyBtn = document.getElementById("generateKeyBtn");
+
+/* ===============================
+   SECURE AES KEY GENERATOR
+================================ */
+function generateAESKey(sizeBits) {
+  const length = sizeBits / 8; // 16 / 24 / 32
+  const array = new Uint8Array(length);
+
+  window.crypto.getRandomValues(array);
+
+  // Convert to readable characters
+  return Array.from(array)
+    .map(b => (b % 62).toString(36))
+    .join("")
+    .slice(0, length);
+}
+
+/* ===============================
+   GENERATE BUTTON CLICK
+================================ */
+generateKeyBtn.addEventListener("click", () => {
+  const size = parseInt(aesKeySize.value, 10);
+  secretKey.value = generateAESKey(size);
+});
+
+/* ===============================
+   AUTO-REGENERATE ON KEY SIZE CHANGE
+================================ */
+aesKeySize.addEventListener("change", () => {
+  secretKey.value = generateAESKey(parseInt(aesKeySize.value, 10));
+});
