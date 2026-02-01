@@ -215,3 +215,24 @@ body {
     display: block;
   }
 }
+/* ===============================
+   SOCIAL ICONS
+=============================== */
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 12px;
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  fill: var(--text);
+  transition: opacity 0.2s ease;
+}
+
+.icon:hover {
+  opacity: 0.7;
+}
+
