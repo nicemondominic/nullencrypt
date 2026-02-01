@@ -190,18 +190,20 @@ body.dark .dash:hover {
   background-color: #ffffff;
   color: #000000;
 }
-.dark-toggle {
-  padding: 8px 18px;
-  border-radius: 20px;
+.theme-toggle {
+  padding: 8px 14px;
+  border-radius: 18px;
   border: 1px solid var(--border);
-  background-color: var(--bg);
+
+  background: transparent;
   color: var(--text);
+
   cursor: pointer;
-  font-size: 0.85rem;
   font-weight: 600;
+  font-size: 0.85rem;
 }
 
-body.dark .dark-toggle {
+body.dark .theme-toggle {
   background-color: #ffffff;
   color: #000000;
 }
