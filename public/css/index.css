@@ -1,23 +1,18 @@
-/* =====================================================
-   RESET
-===================================================== */
+/* RESET */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", system-ui, sans-serif;
+  font-family: system-ui, sans-serif;
 }
 
 body {
   background: #ffffff;
-  color: #000000;
-  min-height: 100vh;
+  color: #000;
   line-height: 1.6;
 }
 
-/* =====================================================
-   NAVBAR (MOBILE FIRST)
-===================================================== */
+/* NAVBAR */
 .navbar {
   display: flex;
   flex-direction: column;
@@ -41,52 +36,38 @@ body {
   text-decoration: none;
   color: #000;
   font-weight: 600;
-  font-size: 0.85rem;
-}
-
-.dash,
-.nav-btn {
-  padding: 8px 16px;
-  border-radius: 18px;
+  font-size: 0.9rem;
+  padding: 8px 14px;
   border: 1px solid #000;
+  border-radius: 18px;
 }
 
-/* =====================================================
-   HERO (STACKED BY DEFAULT)
-===================================================== */
+/* HERO */
 .hero {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  padding: 40px 16px;
+  padding: 32px 16px;
 }
 
 .hero-content h1 {
-  font-size: 2.2rem;
-  line-height: 1.2;
+  font-size: 2rem;
   margin-bottom: 16px;
-}
-
-.hero-content span {
-  opacity: 0.6;
 }
 
 .hero-content p {
   font-size: 1rem;
   color: #444;
-  max-width: 100%;
 }
 
 .hero-actions {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 12px;
-  margin-top: 24px;
+  margin-top: 20px;
 }
 
 .primary-btn,
 .secondary-btn {
-  padding: 12px 22px;
+  text-align: center;
+  padding: 12px;
   border-radius: 24px;
   text-decoration: none;
   font-weight: 600;
@@ -104,24 +85,19 @@ body {
 
 /* HERO VISUAL */
 .hero-visual {
-  display: flex;
-  justify-content: center;
+  margin-top: 32px;
 }
 
 .code-card {
-  width: 100%;
-  max-width: 320px;
   background: #000;
   color: #fff;
-  padding: 20px;
-  border-radius: 14px;
+  padding: 16px;
+  border-radius: 12px;
   font-family: monospace;
   font-size: 0.85rem;
 }
 
-/* =====================================================
-   TRUST
-===================================================== */
+/* TRUST */
 .trust {
   padding: 24px 16px;
   text-align: center;
@@ -133,87 +109,57 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 16px;
-  margin-top: 10px;
-  font-weight: 600;
+  gap: 14px;
+  margin-top: 12px;
 }
 
-/* =====================================================
-   FEATURES (STACKED)
-===================================================== */
+/* FEATURES */
 .features {
-  padding: 48px 16px;
-}
-
-.features h2 {
-  font-size: 1.7rem;
-  margin-bottom: 32px;
+  padding: 32px 16px;
 }
 
 .feature-grid {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .feature-card {
   border: 1px solid #e5e7eb;
-  padding: 22px;
-  border-radius: 14px;
+  padding: 20px;
+  border-radius: 12px;
 }
 
-/* =====================================================
-   FLOW
-===================================================== */
+/* FLOW */
 .flow {
-  padding: 48px 16px;
+  padding: 32px 16px;
   text-align: center;
-}
-
-.flow h2 {
-  font-size: 1.7rem;
 }
 
 .flow-steps {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-top: 24px;
-}
-
-.step {
-  padding: 12px 18px;
-  border: 1px solid #000;
-  border-radius: 18px;
-  font-weight: 600;
+  gap: 10px;
 }
 
 .arrow {
-  display: none; /* hide arrows on mobile */
+  display: none;
 }
 
-/* =====================================================
-   CTA
-===================================================== */
+/* CTA */
 .cta {
-  padding: 60px 16px;
+  padding: 48px 16px;
   background: #000;
   color: #fff;
   text-align: center;
 }
 
-.cta h2 {
-  font-size: 1.9rem;
-}
-
 .cta p {
-  margin: 14px 0 28px;
   color: #ccc;
+  margin: 12px 0 24px;
 }
 
-/* =====================================================
-   FOOTER
-===================================================== */
+/* FOOTER */
 .footer {
   padding: 24px 16px;
   text-align: center;
@@ -221,9 +167,7 @@ body {
   border-top: 1px solid #e5e7eb;
 }
 
-/* =====================================================
-   DESKTOP ENHANCEMENT
-===================================================== */
+/* DESKTOP ENHANCEMENT */
 @media (min-width: 900px) {
 
   .navbar {
@@ -236,17 +180,17 @@ body {
   .hero {
     max-width: 1200px;
     margin: auto;
-    flex-direction: row;
-    align-items: center;
+    display: flex;
     gap: 48px;
     padding: 80px 48px;
   }
 
-  .hero-content h1 {
-    font-size: 3rem;
+  .hero-actions {
+    flex-direction: row;
   }
 
-  .features {
+  .features,
+  .flow {
     max-width: 1200px;
     margin: auto;
     padding: 80px 48px;
@@ -261,10 +205,6 @@ body {
     flex: 1 1 240px;
   }
 
-  .flow {
-    padding: 80px 48px;
-  }
-
   .flow-steps {
     flex-direction: row;
     justify-content: center;
@@ -273,6 +213,5 @@ body {
 
   .arrow {
     display: block;
-    font-size: 1.4rem;
   }
 }
