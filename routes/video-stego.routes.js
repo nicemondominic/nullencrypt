@@ -1,17 +1,20 @@
 const express = require("express");
 const crypto = require("crypto");
 const multer = require("multer");
-const fs = require("fs");
-const path = require("path");
 
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
-const MAGIC = Buffer.from("CRYPTOSECURE_STEGO");
+const MAGIC = Buffer.from("NULLENCRYPT_VIDEO_STEGO");
 
-/* ===== AES HELPERS ===== */
+/* ================= AES HELPERS ================= */
+
 function deriveKey(key, size) {
-  return crypto.createHash("sha256").update(key).digest().slice(0, size / 8);
+  return crypto
+    .createHash("sha256")
+    .update(key)
+    .digest()
+    .slice(0, size / 8);
 }
 
 function aesEncrypt(data, key, size, mode) {
@@ -21,125 +24,132 @@ function aesEncrypt(data, key, size, mode) {
     deriveKey(key, size),
     iv
   );
-  const enc = Buffer.concat([cipher.update(data), cipher.final()]);
-  return iv ? Buffer.concat([iv, enc]) : enc;
+
+  const encrypted = Buffer.concat([cipher.update(data), cipher.final()]);
+  return iv ? Buffer.concat([iv, encrypted]) : encrypted;
 }
 
 function aesDecrypt(data, key, size, mode) {
   let iv = null;
-  let enc = data;
+  let encrypted = data;
+
   if (mode !== "ecb") {
     iv = data.slice(0, 16);
-    enc = data.slice(16);
+    encrypted = data.slice(16);
   }
+
   const decipher = crypto.createDecipheriv(
     `aes-${size}-${mode}`,
     deriveKey(key, size),
     iv
   );
-  return Buffer.concat([decipher.update(enc), decipher.final()]);
+
+  return Buffer.concat([decipher.update(encrypted), decipher.final()]);
 }
 
-/* ===== EMBED FILE INTO VIDEO ===== */
-// ===== EMBED FILE INTO VIDEO (WITH METADATA) =====
-router.post("/embed", upload.fields([
-  { name: "video" },
-  { name: "file" }
-]), (req, res) => {
-  try {
-    const video = req.files.video[0].buffer;
-    const file = req.files.file[0];
+/* ================= EMBED FILE INTO VIDEO ================= */
 
-    // 🔹 Metadata
-    const meta = {
-      name: file.originalname,
-      type: file.mimetype
-    };
-    const metaBuf = Buffer.from(JSON.stringify(meta));
+router.post(
+  "/embed",
+  upload.fields([{ name: "video" }, { name: "file" }]),
+  (req, res) => {
+    try {
+      const videoFile = req.files.video[0];
+      const hiddenFile = req.files.file[0];
 
-    const encrypted = aesEncrypt(
-      file.buffer,
-      req.body.key,
-      req.body.keySize,
-      req.body.aesMode
-    );
+      const videoBuffer = videoFile.buffer;
 
-    const metaLen = Buffer.alloc(4);
-    metaLen.writeUInt32BE(metaBuf.length);
+      // 🔹 Metadata
+      const meta = {
+        name: hiddenFile.originalname,
+        type: hiddenFile.mimetype,
+        size: hiddenFile.size
+      };
 
-    const payloadLen = Buffer.alloc(8);
-    payloadLen.writeBigUInt64BE(BigInt(encrypted.length));
+      const metaBuf = Buffer.from(JSON.stringify(meta));
 
-    const stegoVideo = Buffer.concat([
-      video,
-      MAGIC,
-      metaLen,
-      metaBuf,
-      payloadLen,
-      encrypted
-    ]);
+      const encrypted = aesEncrypt(
+        hiddenFile.buffer,
+        req.body.key,
+        Number(req.body.keySize),
+        req.body.aesMode
+      );
 
-    res.set({
-      "Content-Type": "video/mp4",
-      "Content-Disposition": "attachment; filename=stego-video.mp4"
-    });
+      const metaLen = Buffer.alloc(4);
+      metaLen.writeUInt32BE(metaBuf.length);
 
-    res.send(stegoVideo);
+      const payloadLen = Buffer.alloc(8);
+      payloadLen.writeBigUInt64BE(BigInt(encrypted.length));
 
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Video steganography failed");
-  }
-});
+      const stegoVideo = Buffer.concat([
+        videoBuffer,
+        MAGIC,
+        metaLen,
+        metaBuf,
+        payloadLen,
+        encrypted
+      ]);
 
+      res.set({
+        "Content-Type": "application/octet-stream",
+        "Content-Disposition": `attachment; filename="stego-${videoFile.originalname}"`
+      });
 
-/* ===== EXTRACT FILE FROM VIDEO ===== */
-// ===== EXTRACT FILE FROM VIDEO (WITH METADATA) =====
-router.post("/extract", upload.single("video"), (req, res) => {
-  try {
-    const data = req.file.buffer;
-
-    const magicIndex = data.lastIndexOf(MAGIC);
-    if (magicIndex === -1) {
-      return res.status(400).send("No hidden data found");
+      res.send(stegoVideo);
+    } catch (err) {
+      console.error("EMBED ERROR:", err);
+      res.status(500).send("Video steganography failed");
     }
-
-    let offset = magicIndex + MAGIC.length;
-
-    const metaLen = data.readUInt32BE(offset);
-    offset += 4;
-
-    const meta = JSON.parse(
-      data.slice(offset, offset + metaLen).toString()
-    );
-    offset += metaLen;
-
-    const payloadLen = Number(
-      data.readBigUInt64BE(offset)
-    );
-    offset += 8;
-
-    const encrypted = data.slice(offset, offset + payloadLen);
-
-    const decrypted = aesDecrypt(
-      encrypted,
-      req.body.key,
-      req.body.keySize,
-      req.body.aesMode
-    );
-
-    res.set({
-      "Content-Type": meta.type,
-      "Content-Disposition": `attachment; filename="${meta.name}"`
-    });
-
-    res.send(decrypted);
-
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Video steganography failed");
   }
-});
+);
 
+/* ================= EXTRACT FILE FROM VIDEO ================= */
+
+router.post(
+  "/extract",
+  upload.single("video"),
+  (req, res) => {
+    try {
+      const data = req.file.buffer;
+
+      const magicIndex = data.lastIndexOf(MAGIC);
+      if (magicIndex === -1) {
+        return res.status(400).send("No hidden data found");
+      }
+
+      let offset = magicIndex + MAGIC.length;
+
+      const metaLen = data.readUInt32BE(offset);
+      offset += 4;
+
+      const meta = JSON.parse(
+        data.slice(offset, offset + metaLen).toString()
+      );
+      offset += metaLen;
+
+      const payloadLen = Number(data.readBigUInt64BE(offset));
+      offset += 8;
+
+      const encrypted = data.slice(offset, offset + payloadLen);
+
+      const decrypted = aesDecrypt(
+        encrypted,
+        req.body.key,
+        Number(req.body.keySize),
+        req.body.aesMode
+      );
+
+      res.set({
+        "Content-Type": meta.type,
+        "Content-Disposition": `attachment; filename="${meta.name}"`
+      });
+
+      res.send(decrypted);
+    } catch (err) {
+      console.error("EXTRACT ERROR:", err);
+      res.status(500).send("Video steganography failed");
+    }
+  }
+);
 
 module.exports = router;
