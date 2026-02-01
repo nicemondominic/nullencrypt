@@ -54,21 +54,6 @@ body {
 }
 
 
-/* DARK TOGGLE */
-.dark-toggle {
-  padding: 8px 16px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text);
-  cursor: pointer;
-}
-
-body.dark .dark-toggle {
-  background: #fff;
-  color: #000;
-}
-
 /* LAYOUT */
 .page-wrapper {
   max-width: 1200px;
@@ -212,5 +197,8 @@ body.dark .theme-toggle {
 @media (max-width: 900px) {
   .page-wrapper {
     grid-template-columns: 1fr;
+  }
+  .navbar {
+    padding: 16px 24px;
   }
 }

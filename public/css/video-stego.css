@@ -200,4 +200,7 @@ body.dark .theme-toggle {
   .page-wrapper {
     grid-template-columns: 1fr;
   }
+  .navbar {
+    padding: 16px 24px;
+  }
 }

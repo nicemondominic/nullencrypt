@@ -308,4 +308,7 @@ body.dark .dash:hover {
   .page-wrapper {
     grid-template-columns: 1fr;
   }
+  .navbar {
+    padding: 16px 24px;
+  }
 }
