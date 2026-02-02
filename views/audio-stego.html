@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Audio Steganography | nullEncrypt</title>
+  <link rel="stylesheet" href="/css/audio-stego.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">nullEncrypt</div>
+  <nav>
+    <a href="/dashboard" class="dash">Dashboard</a>
+    <button id="themeToggle" class="theme-toggle">🌙 Dark</button>
+  </nav>
+</header>
+
+<main class="page-wrapper">
+
+  <section class="crypto-card">
+    <h2>File in Audio (Steganography)</h2>
+    <p class="subtitle">
+      Hide any encrypted file inside an audio file without affecting playback
+    </p>
+
+    <div class="toggle">
+      <button id="embedBtn" class="active">Embed</button>
+      <button id="extractBtn">Extract</button>
+    </div>
+
+    <form id="audioStegoForm" class="crypto-form">
+
+      <div class="form-group">
+        <label>Upload Audio</label>
+        <input type="file" id="audioFile" accept="audio/*" required>
+      </div>
+
+      <div class="form-group" id="fileGroup">
+        <label>File to Hide</label>
+        <input type="file" id="hiddenFile">
+      </div>
+
+      <div class="form-group">
+        <label>AES Key Size</label>
+        <select id="aesKeySize">
+          <option value="128">128-bit</option>
+          <option value="192">192-bit</option>
+          <option value="256" selected>256-bit</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>AES Mode</label>
+        <select id="aesMode">
+          <option value="cbc">CBC (Recommended)</option>
+          <option value="ecb">ECB (Not Secure)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Secret Key</label>
+
+        <div class="key-row">
+          <input
+            type="text"
+            id="secretKey"
+            placeholder="Enter or generate secret key"
+            required
+          />
+          <button type="button" id="generateKeyBtn" class="btn-secondary">
+            Generate
+          </button>
+        </div>
+
+        <small class="key-hint">
+          AES-128: 16 chars • AES-192: 24 chars • AES-256: 32 chars
+        </small>
+      </div>
+
+      <button type="submit" class="btn-primary">Process</button>
+    </form>
+  </section>
+
+  <section class="output-card">
+    <h3>Output</h3>
+    <pre id="output" class="output-box">
+The stego audio or extracted file will download automatically.
+    </pre>
+  </section>
+
+</main>
+
+<script src="/js/audio-stego.js"></script>
+</body>
+</html>

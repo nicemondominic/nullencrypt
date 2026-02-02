@@ -1,0 +1,270 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* ===============================
+   THEME VARIABLES
+================================ */
+/* Light */
+:root {
+  --bg: #ffffff;
+  --card: #ffffff;
+  --text: #000000;
+  --border: #8d8c8c;
+  --muted: #6b7280;
+}
+
+/* Dark */
+body.dark {
+  --bg: #000000;
+  --card: #000000;
+  --text: #ffffff;
+  --border: #1f2937;
+  --muted: #9ca3af;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ===============================
+   NAVBAR
+================================ */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ===============================
+   LAYOUT
+================================ */
+.page-wrapper {
+  max-width: 1200px;
+  margin: 60px auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+/* ===============================
+   CARDS
+================================ */
+.crypto-card,
+.output-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  background: var(--card);
+}
+
+/* ===============================
+   TOGGLE BUTTONS
+================================ */
+.toggle {
+  display: flex;
+  margin: 20px 0;
+}
+
+.toggle button {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.toggle .active {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* ===============================
+   FORM
+================================ */
+.form-group {
+  margin-bottom: 16px;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Fix select color issue in dark mode */
+select,
+option {
+  background: #ffffff;
+  color: #000000;
+}
+
+body.dark select,
+body.dark option {
+  background: #000000;
+  color: #ffffff;
+}
+
+/* Secret key row */
+.key-row {
+  display: flex;
+  gap: 8px;
+}
+
+/* Hint */
+.key-hint {
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ===============================
+   BUTTONS
+================================ */
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--text);
+  background: var(--text);
+  color: var(--bg);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Generate key button */
+.btn-secondary {
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--text);
+  color: var(--bg);
+}
+
+.btn-secondary:active {
+  transform: scale(0.97);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===============================
+   OUTPUT
+================================ */
+.output-box {
+  min-height: 200px;
+  border: 1px solid var(--border);
+  padding: 16px;
+  border-radius: 10px;
+  white-space: pre-wrap;
+}
+
+/* ===============================
+   DASHBOARD LINK
+================================ */
+.dash {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--text);
+  text-decoration: none;
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.dash:hover {
+  background-color: var(--text);
+  color: var(--bg);
+}
+
+body.dark .dash {
+  border-color: #ffffff;
+}
+
+body.dark .dash:hover {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* ===============================
+   THEME TOGGLE
+================================ */
+.theme-toggle {
+  padding: 8px 14px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+body.dark .theme-toggle {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 900px) {
+  .page-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .navbar {
+    padding: 16px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn-secondary {
+    padding: 12px;
+    font-size: 15px;
+  }
+}
