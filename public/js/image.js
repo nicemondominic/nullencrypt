@@ -15,8 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     decryptBtn.classList.remove("active");
 
     imageInput.value = "";
-    imageInput.accept = "image/*";
-
+    imageInput.accept = "image/*,*/*";
     imageInput.type = "text";
     imageInput.type = "file";
   };
@@ -28,20 +27,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     imageInput.value = "";
     imageInput.accept = ".bin,application/octet-stream,*/*";
-
     imageInput.type = "text";
     imageInput.type = "file";
   };
 
-  /* ===============================
-     SUBMIT
-  =============================== */
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const file = imageInput.files[0];
     if (!file || file.size === 0) {
-      alert("Please select a valid image");
+      alert("Please select a valid file");
       return;
     }
 
@@ -51,13 +46,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const minLen = keySize / 8;
     if (key.length < minLen) {
-      alert(`AES-${keySize} requires ${minLen} characters`);
+      alert(`AES-${keySize} requires at least ${minLen} characters`);
       return;
     }
 
     const formData = new FormData();
 
-    // 🔥 CRITICAL iOS FIX (filename metadata)
+    // 🔥 iOS / Android FIX: Always provide filename metadata
     formData.append("image", file, file.name || "image.heic");
     formData.append("mode", mode);
     formData.append("key", key);
@@ -71,7 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (!res.ok) {
-        alert("Image processing failed");
+        const msg = await res.text();
+        alert("Processing failed: " + msg);
         return;
       }
 
@@ -81,11 +77,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const a = document.createElement("a");
       a.href = url;
 
-      // Encrypt → binary
       if (mode === "encrypt") {
         a.download = "encrypted-image.bin";
-      }
-      // Decrypt → DO NOT force extension (HEIC SAFE)
+      } 
+      // 🔓 Decrypt: backend sends original filename
 
       document.body.appendChild(a);
       a.click();
@@ -94,15 +89,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     } catch (err) {
       console.error(err);
-      alert("Unexpected error");
+      alert("Unexpected error occurred");
     }
   });
 
 });
 
-/* ===============================
-   THEME TOGGLE
-=============================== */
+/* ===== THEME TOGGLE ===== */
 const toggle = document.getElementById("themeToggle");
 
 if (toggle) {
@@ -118,3 +111,62 @@ if (toggle) {
     toggle.textContent = isDark ? "☀ Light" : "🌙 Dark";
   });
 }
+
+const keyInput = document.getElementById("secretKey");
+const keySizeSelect = document.getElementById("aesKeySize");
+const generateBtn = document.getElementById("generateKeyBtn");
+const keyHint = document.getElementById("keyHint");
+
+/* ===== Update key length limit based on AES size ===== */
+function updateKeyLimit() {
+  const keySize = parseInt(keySizeSelect.value, 10);
+  const requiredLength = keySize / 8; // 128->16, 192->24, 256->32
+
+  keyInput.maxLength = requiredLength;
+
+  // If user already typed longer key, trim it
+  if (keyInput.value.length > requiredLength) {
+    keyInput.value = keyInput.value.slice(0, requiredLength);
+  }
+
+  keyHint.textContent = `AES-${keySize}: ${requiredLength} characters required`;
+}
+
+/* ===== Secure random key generator ===== */
+function generateRandomKey(length) {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+
+  const array = new Uint32Array(length);
+  window.crypto.getRandomValues(array); // Cryptographically secure RNG
+
+  for (let i = 0; i < length; i++) {
+    result += chars[array[i] % chars.length];
+  }
+
+  return result;
+}
+
+/* ===== When AES size changes ===== */
+keySizeSelect.addEventListener("change", () => {
+  updateKeyLimit();
+});
+
+/* ===== When user types, enforce limit ===== */
+keyInput.addEventListener("input", () => {
+  const max = keyInput.maxLength;
+  if (keyInput.value.length > max) {
+    keyInput.value = keyInput.value.slice(0, max);
+  }
+});
+
+/* ===== Generate button ===== */
+generateBtn.addEventListener("click", () => {
+  const keySize = parseInt(keySizeSelect.value, 10);
+  const length = keySize / 8;
+  const newKey = generateRandomKey(length);
+  keyInput.value = newKey;
+});
+
+/* ===== Init on page load ===== */
+updateKeyLimit();

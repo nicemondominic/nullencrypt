@@ -15,7 +15,7 @@ app.use(express.static('public'));
 
 /* MAIN PAGES */
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/error.html'));
+  res.sendFile(path.join(__dirname, 'views/index.html'));
 });
 
 app.get('/dashboard', (req, res) => {

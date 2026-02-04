@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Image Encryption | nullEncrypt</title>
   <link rel="stylesheet" href="/css/image.css">
 </head>
@@ -12,21 +12,16 @@
   <div class="logo">nullEncrypt</div>
   <nav>
     <a href="/dashboard" class="dash">Dashboard</a>
-    <button id="themeToggle" class="theme-toggle">
-  🌙 Dark
-</button>
+    <button id="themeToggle" class="theme-toggle">🌙 Dark</button>
   </nav>
 </header>
 
 <main class="page-wrapper">
 
-  <!-- INPUT CARD -->
   <section class="crypto-card">
-
     <h2>Image Encryption & Decryption</h2>
     <p class="subtitle">Secure images using AES encryption</p>
 
-    <!-- MODE TOGGLE -->
     <div class="toggle">
       <button id="encryptBtn" class="active">Encrypt</button>
       <button id="decryptBtn">Decrypt</button>
@@ -35,11 +30,10 @@
     <form id="imageForm" class="crypto-form">
 
       <div class="form-group">
-        <label>Select Image File</label>
+        <label>Select Image / File</label>
         <input type="file" id="imageFile" name="image" required>
       </div>
 
-      <!-- AES OPTIONS -->
       <div class="form-group">
         <label>AES Key Size</label>
         <select id="aesKeySize">
@@ -58,28 +52,37 @@
       </div>
 
       <div class="form-group">
-        <label>Secret Key</label>
-        <input type="text" id="secretKey" placeholder="Enter secret key" required>
-        <small class="key-hint">
-          AES-128: 16 chars • AES-192: 24 chars • AES-256: 32 chars
-        </small>
-      </div>
+  <label>Secret Key</label>
+  <div style="display:flex; gap:10px;">
+    <input 
+      type="text" 
+      id="secretKey" 
+      placeholder="Enter or generate secret key" 
+      required 
+      style="flex:1;"
+    >
+    <button type="button" id="generateKeyBtn" class="btn-secondary">
+      Generate
+    </button>
+  </div>
+  <small class="key-hint" id="keyHint">
+    AES-256: 32 characters required
+  </small>
+</div>
+
 
       <button type="submit" class="btn-primary full-width">
-        Process Image
+        Process File
       </button>
 
     </form>
   </section>
 
-  <!-- OUTPUT -->
   <section class="output-card">
     <h3>Output</h3>
-
     <pre id="output" class="output-box show">
 Encrypted / decrypted file will be downloaded automatically.
     </pre>
-
   </section>
 
 </main>
