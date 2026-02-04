@@ -28,7 +28,7 @@ app.get('/text', (req, res) => {
 });
 
 app.get('/image', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/image.html'));
+  res.sendFile(path.join(__dirname, 'views/error.html'));
 });
 
 /* OTHER PAGES */
