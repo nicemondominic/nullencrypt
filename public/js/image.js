@@ -9,9 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let mode = "encrypt";
 
-  /* ===============================
-     MODE SWITCH (iOS SAFE)
-  =============================== */
   encryptBtn.onclick = () => {
     mode = "encrypt";
     encryptBtn.classList.add("active");
@@ -20,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
     imageInput.value = "";
     imageInput.accept = "image/*";
 
-    // iOS Safari picker reset
     imageInput.type = "text";
     imageInput.type = "file";
   };

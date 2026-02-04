@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const keySize = document.getElementById("aesKeySize");
   const aesMode = document.getElementById("aesMode");
-  const secretKey = document.getElementById("secretKey");
 
     /* ===============================
      SAFETY CHECK
