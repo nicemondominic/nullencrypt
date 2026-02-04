@@ -6,7 +6,7 @@ const sharp = require("sharp");
 
 const router = express.Router();
 
-/* 🔥 Use memoryStorage for iOS / Android compatibility */
+/* Use memory storage for mobile compatibility */
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
@@ -14,7 +14,7 @@ const upload = multer({
   }
 });
 
-/* ===== AES KEY DERIVATION ===== */
+/* Derive AES key from user password */
 function deriveKey(key, size) {
   return crypto.createHash("sha256").update(key).digest().slice(0, size / 8);
 }
@@ -25,7 +25,7 @@ router.post("/crypto-image", upload.single("image"), async (req, res) => {
       return res.status(400).send("Invalid file upload");
     }
 
-    const { mode, key, keySize, aesMode } = req.body;
+    const { mode, key, keySize, aesMode, convertHeic, isIOS } = req.body;
     const inputBuffer = req.file.buffer;
 
     /* ================= ENCRYPT ================= */
@@ -43,11 +43,11 @@ router.post("/crypto-image", upload.single("image"), async (req, res) => {
         cipher.final()
       ]);
 
-      // Store original filename inside encrypted file
-      const originalName = req.file.originalname || "image.heic";
+      // Save original filename inside encrypted file
+      const originalName = req.file.originalname || "file.bin";
       const nameBuf = Buffer.from(originalName, "utf-8");
 
-      // First 4 bytes = filename length
+      // 4 bytes = filename length
       const header = Buffer.alloc(4);
       header.writeUInt32BE(nameBuf.length, 0);
 
@@ -57,7 +57,7 @@ router.post("/crypto-image", upload.single("image"), async (req, res) => {
 
       res.set({
         "Content-Type": "application/octet-stream",
-        "Content-Disposition": "attachment; filename=encrypted-image.bin"
+        "Content-Disposition": "attachment; filename=encrypted-file.bin"
       });
 
       return res.send(payload);
@@ -73,7 +73,7 @@ router.post("/crypto-image", upload.single("image"), async (req, res) => {
 
     // Read filename
     const nameBuf = inputBuffer.slice(offset, offset + nameLen);
-    let originalName = nameBuf.toString("utf-8") || "decrypted.heic";
+    let originalName = nameBuf.toString("utf-8") || "decrypted-file";
     offset += nameLen;
 
     let iv = null;
@@ -98,24 +98,26 @@ router.post("/crypto-image", upload.single("image"), async (req, res) => {
       decipher.final()
     ]);
 
-    /* ===== Detect type & fix HEIC for iOS ===== */
+    /* ===== Handle HEIC conversion ===== */
     const ext = path.extname(originalName).toLowerCase();
 
     let outputBuffer = decrypted;
     let downloadName = originalName;
     let contentType = "application/octet-stream";
 
-    if (ext === ".heic") {
-      // 🔥 Convert HEIC → JPG so iOS can open it
+    const shouldConvert =
+      ext === ".heic" && (convertHeic === "1" || isIOS === "1");
+
+    if (shouldConvert) {
+      // Convert HEIC -> JPG for iOS / user preference
       outputBuffer = await sharp(decrypted).jpeg({ quality: 95 }).toBuffer();
       downloadName = originalName.replace(/\.heic$/i, ".jpg");
       contentType = "image/jpeg";
-    } else if (ext === ".jpg" || ext === ".jpeg") {
-      contentType = "image/jpeg";
-    } else if (ext === ".png") {
-      contentType = "image/png";
-    } else if (ext === ".webp") {
-      contentType = "image/webp";
+    } else {
+      if (ext === ".jpg" || ext === ".jpeg") contentType = "image/jpeg";
+      else if (ext === ".png") contentType = "image/png";
+      else if (ext === ".webp") contentType = "image/webp";
+      else if (ext === ".heic") contentType = "image/heic";
     }
 
     res.set({
@@ -126,8 +128,8 @@ router.post("/crypto-image", upload.single("image"), async (req, res) => {
     res.send(outputBuffer);
 
   } catch (err) {
-    console.error(err);
-    res.status(500).send("Image processing failed");
+    console.error("Crypto error:", err);
+    res.status(500).send("Encryption/Decryption failed. Check key/mode.");
   }
 });
 

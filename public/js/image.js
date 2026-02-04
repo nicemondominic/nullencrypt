@@ -6,6 +6,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const imageInput = document.getElementById("imageFile");
   const keyInput = document.getElementById("secretKey");
+  const keySizeSelect = document.getElementById("aesKeySize");
+  const generateBtn = document.getElementById("generateKeyBtn");
+  const keyHint = document.getElementById("keyHint");
+  const convertToggle = document.getElementById("convertHeicToggle");
 
   let mode = "encrypt";
 
@@ -31,6 +35,50 @@ document.addEventListener("DOMContentLoaded", () => {
     imageInput.type = "file";
   };
 
+  /* ===== Key length handling ===== */
+  function updateKeyLimit() {
+    const keySize = parseInt(keySizeSelect.value, 10);
+    const requiredLength = keySize / 8;
+
+    keyInput.maxLength = requiredLength;
+
+    if (keyInput.value.length > requiredLength) {
+      keyInput.value = keyInput.value.slice(0, requiredLength);
+    }
+
+    keyHint.textContent = `AES-${keySize}: ${requiredLength} characters required`;
+  }
+
+  function generateRandomKey(length) {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let result = "";
+    const array = new Uint32Array(length);
+    window.crypto.getRandomValues(array);
+
+    for (let i = 0; i < length; i++) {
+      result += chars[array[i] % chars.length];
+    }
+    return result;
+  }
+
+  keySizeSelect.addEventListener("change", updateKeyLimit);
+
+  keyInput.addEventListener("input", () => {
+    const max = keyInput.maxLength;
+    if (keyInput.value.length > max) {
+      keyInput.value = keyInput.value.slice(0, max);
+    }
+  });
+
+  generateBtn.addEventListener("click", () => {
+    const keySize = parseInt(keySizeSelect.value, 10);
+    const length = keySize / 8;
+    keyInput.value = generateRandomKey(length);
+  });
+
+  updateKeyLimit();
+
+  /* ===== Submit ===== */
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -41,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const key = keyInput.value;
-    const keySize = document.getElementById("aesKeySize").value;
+    const keySize = keySizeSelect.value;
     const aesMode = document.getElementById("aesMode").value;
 
     const minLen = keySize / 8;
@@ -50,14 +98,17 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const formData = new FormData();
+    // Detect iOS
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
-    // 🔥 iOS / Android FIX: Always provide filename metadata
-    formData.append("image", file, file.name || "image.heic");
+    const formData = new FormData();
+    formData.append("image", file, file.name || "file.bin");
     formData.append("mode", mode);
     formData.append("key", key);
     formData.append("keySize", keySize);
     formData.append("aesMode", aesMode);
+    formData.append("convertHeic", convertToggle.checked ? "1" : "0");
+    formData.append("isIOS", isIOS ? "1" : "0");
 
     try {
       const res = await fetch("/api/crypto-image", {
@@ -78,9 +129,9 @@ document.addEventListener("DOMContentLoaded", () => {
       a.href = url;
 
       if (mode === "encrypt") {
-        a.download = "encrypted-image.bin";
-      } 
-      // 🔓 Decrypt: backend sends original filename
+        a.download = "encrypted-file.bin";
+      }
+      // decrypt: backend sets filename
 
       document.body.appendChild(a);
       a.click();
@@ -111,62 +162,3 @@ if (toggle) {
     toggle.textContent = isDark ? "☀ Light" : "🌙 Dark";
   });
 }
-
-const keyInput = document.getElementById("secretKey");
-const keySizeSelect = document.getElementById("aesKeySize");
-const generateBtn = document.getElementById("generateKeyBtn");
-const keyHint = document.getElementById("keyHint");
-
-/* ===== Update key length limit based on AES size ===== */
-function updateKeyLimit() {
-  const keySize = parseInt(keySizeSelect.value, 10);
-  const requiredLength = keySize / 8; // 128->16, 192->24, 256->32
-
-  keyInput.maxLength = requiredLength;
-
-  // If user already typed longer key, trim it
-  if (keyInput.value.length > requiredLength) {
-    keyInput.value = keyInput.value.slice(0, requiredLength);
-  }
-
-  keyHint.textContent = `AES-${keySize}: ${requiredLength} characters required`;
-}
-
-/* ===== Secure random key generator ===== */
-function generateRandomKey(length) {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let result = "";
-
-  const array = new Uint32Array(length);
-  window.crypto.getRandomValues(array); // Cryptographically secure RNG
-
-  for (let i = 0; i < length; i++) {
-    result += chars[array[i] % chars.length];
-  }
-
-  return result;
-}
-
-/* ===== When AES size changes ===== */
-keySizeSelect.addEventListener("change", () => {
-  updateKeyLimit();
-});
-
-/* ===== When user types, enforce limit ===== */
-keyInput.addEventListener("input", () => {
-  const max = keyInput.maxLength;
-  if (keyInput.value.length > max) {
-    keyInput.value = keyInput.value.slice(0, max);
-  }
-});
-
-/* ===== Generate button ===== */
-generateBtn.addEventListener("click", () => {
-  const keySize = parseInt(keySizeSelect.value, 10);
-  const length = keySize / 8;
-  const newKey = generateRandomKey(length);
-  keyInput.value = newKey;
-});
-
-/* ===== Init on page load ===== */
-updateKeyLimit();

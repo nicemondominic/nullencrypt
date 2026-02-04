@@ -52,24 +52,33 @@
       </div>
 
       <div class="form-group">
-  <label>Secret Key</label>
-  <div style="display:flex; gap:10px;">
-    <input 
-      type="text" 
-      id="secretKey" 
-      placeholder="Enter or generate secret key" 
-      required 
-      style="flex:1;"
-    >
-    <button type="button" id="generateKeyBtn" class="btn-secondary">
-      Generate
-    </button>
-  </div>
-  <small class="key-hint" id="keyHint">
-    AES-256: 32 characters required
-  </small>
-</div>
+        <label>Secret Key</label>
+        <div style="display:flex; gap:10px;">
+          <input 
+            type="text" 
+            id="secretKey" 
+            placeholder="Enter or generate secret key" 
+            required 
+            style="flex:1;"
+          >
+          <button type="button" id="generateKeyBtn" class="btn-secondary">
+            Generate
+          </button>
+        </div>
+        <small class="key-hint" id="keyHint">
+          AES-256: 32 characters required
+        </small>
+      </div>
 
+      <div class="form-group">
+        <label style="display:flex; align-items:center; gap:10px;">
+          <input type="checkbox" id="convertHeicToggle" checked>
+          Convert HEIC to JPG after decrypt (recommended for iPhone)
+        </label>
+        <small style="color:#94a3b8;">
+          iOS browsers often can’t open downloaded HEIC files. This converts them to JPG automatically.
+        </small>
+      </div>
 
       <button type="submit" class="btn-primary full-width">
         Process File
