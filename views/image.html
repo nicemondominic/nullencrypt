@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Image Encryption | nullEncrypt</title>
   <link rel="stylesheet" href="/css/image.css">
+
+  <!-- FilePond -->
+  <link href="https://unpkg.com/filepond/dist/filepond.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -31,7 +34,7 @@
 
       <div class="form-group">
         <label>Select Image / File</label>
-        <input type="file" id="imageFile" name="image" required>
+        <input type="file" id="imageFile" name="image">
       </div>
 
       <div class="form-group">
@@ -75,9 +78,6 @@
           <input type="checkbox" id="convertHeicToggle" checked>
           Convert HEIC to JPG after decrypt (recommended for iPhone)
         </label>
-        <small style="color:#94a3b8;">
-          iOS browsers often can’t open downloaded HEIC files. This converts them to JPG automatically.
-        </small>
       </div>
 
       <button type="submit" class="btn-primary full-width">
@@ -96,6 +96,10 @@ Encrypted / decrypted file will be downloaded automatically.
 
 </main>
 
+<!-- FilePond -->
+<script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+
+<!-- Your script -->
 <script src="/js/image.js"></script>
 </body>
 </html>

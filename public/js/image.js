@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const encryptBtn = document.getElementById("encryptBtn");
   const decryptBtn = document.getElementById("decryptBtn");
 
-  const imageInput = document.getElementById("imageFile");
   const keyInput = document.getElementById("secretKey");
   const keySizeSelect = document.getElementById("aesKeySize");
   const generateBtn = document.getElementById("generateKeyBtn");
@@ -13,26 +12,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let mode = "encrypt";
 
+  // Create FilePond instance (this normalizes files from iOS/Android)
+  const pond = FilePond.create(document.getElementById("imageFile"), {
+    allowMultiple: false,
+    instantUpload: false,
+    allowReorder: false
+  });
+
   encryptBtn.onclick = () => {
     mode = "encrypt";
     encryptBtn.classList.add("active");
     decryptBtn.classList.remove("active");
-
-    imageInput.value = "";
-    imageInput.accept = "image/*,*/*";
-    imageInput.type = "text";
-    imageInput.type = "file";
+    pond.removeFiles();
   };
 
   decryptBtn.onclick = () => {
     mode = "decrypt";
     decryptBtn.classList.add("active");
     encryptBtn.classList.remove("active");
-
-    imageInput.value = "";
-    imageInput.accept = ".bin,application/octet-stream,*/*";
-    imageInput.type = "text";
-    imageInput.type = "file";
+    pond.removeFiles();
   };
 
   /* ===== Key length handling ===== */
@@ -82,11 +80,19 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const file = imageInput.files[0];
-    if (!file || file.size === 0) {
-      alert("Please select a valid file");
+    const files = pond.getFiles();
+    if (!files.length) {
+      alert("Please select a file");
       return;
     }
+
+    const file = files[0].file; // <-- normalized REAL Blob
+    if (!file || file.size === 0) {
+      alert("Invalid file selected");
+      return;
+    }
+
+    console.log("Picked file:", file.name, file.type, file.size);
 
     const key = keyInput.value;
     const keySize = keySizeSelect.value;
@@ -98,7 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Detect iOS
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
     const formData = new FormData();
@@ -127,11 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const a = document.createElement("a");
       a.href = url;
-
-      if (mode === "encrypt") {
-        a.download = "encrypted-file.bin";
-      }
-      // decrypt: backend sets filename
+      if (mode === "encrypt") a.download = "encrypted-file.bin";
 
       document.body.appendChild(a);
       a.click();
@@ -145,20 +146,20 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
-
-/* ===== THEME TOGGLE ===== */
 const toggle = document.getElementById("themeToggle");
 
-if (toggle) {
-  if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark");
-    toggle.textContent = "☀ Light";
-  }
-
-  toggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-    const isDark = document.body.classList.contains("dark");
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-    toggle.textContent = isDark ? "☀ Light" : "🌙 Dark";
-  });
+/* Load saved theme */
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
+  toggle.textContent = "☀ Light";
 }
+
+toggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+
+  const isDark = document.body.classList.contains("dark");
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+
+  toggle.textContent = isDark ? "☀ Light" : "🌙 Dark";
+});
+

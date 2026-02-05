@@ -6,7 +6,7 @@ const sharp = require("sharp");
 
 const router = express.Router();
 
-/* Use memory storage for mobile compatibility */
+/* Memory storage for mobile compatibility */
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
@@ -21,8 +21,8 @@ function deriveKey(key, size) {
 
 router.post("/crypto-image", upload.single("image"), async (req, res) => {
   try {
-    if (!req.file || !req.file.buffer || req.file.buffer.length === 0) {
-      return res.status(400).send("Invalid file upload");
+    if (!req.file || !Buffer.isBuffer(req.file.buffer) || req.file.buffer.length < 16) {
+      return res.status(400).send("Invalid or empty file upload");
     }
 
     const { mode, key, keySize, aesMode, convertHeic, isIOS } = req.body;
@@ -43,11 +43,13 @@ router.post("/crypto-image", upload.single("image"), async (req, res) => {
         cipher.final()
       ]);
 
-      // Save original filename inside encrypted file
-      const originalName = req.file.originalname || "file.bin";
+      let originalName = req.file.originalname || "file.bin";
+      if (!path.extname(originalName)) {
+        originalName += ".bin";
+      }
+
       const nameBuf = Buffer.from(originalName, "utf-8");
 
-      // 4 bytes = filename length
       const header = Buffer.alloc(4);
       header.writeUInt32BE(nameBuf.length, 0);
 
@@ -67,11 +69,9 @@ router.post("/crypto-image", upload.single("image"), async (req, res) => {
 
     let offset = 0;
 
-    // Read filename length
     const nameLen = inputBuffer.readUInt32BE(0);
     offset += 4;
 
-    // Read filename
     const nameBuf = inputBuffer.slice(offset, offset + nameLen);
     let originalName = nameBuf.toString("utf-8") || "decrypted-file";
     offset += nameLen;
@@ -98,7 +98,6 @@ router.post("/crypto-image", upload.single("image"), async (req, res) => {
       decipher.final()
     ]);
 
-    /* ===== Handle HEIC conversion ===== */
     const ext = path.extname(originalName).toLowerCase();
 
     let outputBuffer = decrypted;
@@ -109,7 +108,6 @@ router.post("/crypto-image", upload.single("image"), async (req, res) => {
       ext === ".heic" && (convertHeic === "1" || isIOS === "1");
 
     if (shouldConvert) {
-      // Convert HEIC -> JPG for iOS / user preference
       outputBuffer = await sharp(decrypted).jpeg({ quality: 95 }).toBuffer();
       downloadName = originalName.replace(/\.heic$/i, ".jpg");
       contentType = "image/jpeg";
